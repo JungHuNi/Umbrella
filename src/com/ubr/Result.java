@@ -4,10 +4,19 @@ import org.json.simple.JSONObject;
 
 public class Result{
 
-    APIConnect apiConnect = null;
-    JSONObject jsonObject = null;
+    APIConnect apiConnect = new APIConnect();
+    JSONObject jsonObject;
+
+    {
+        try {
+            jsonObject = apiConnect.connectAPI();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     String city = "";
-    String rain = "";
+    int rain;
 
     public Result(APIConnect apiConnect){
         this.apiConnect = apiConnect;
@@ -15,7 +24,7 @@ public class Result{
 
     public String getCityName(){
         try {
-            jsonObject = apiConnect.connectAPI();
+            //jsonObject = apiConnect.connectAPI();
             city = jsonObject.get("name").toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -24,10 +33,10 @@ public class Result{
         return city;
     }
 
-    public String getRain(){
+    public int getRain(){
         try {
-            jsonObject = apiConnect.connectAPI();
-            rain = jsonObject.get("rain").toString();
+            //jsonObject = apiConnect.connectAPI();
+            rain = (int) jsonObject.get("rain[3h]");
         } catch (Exception e) {
             e.printStackTrace();
         }
